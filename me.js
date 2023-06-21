@@ -1,5 +1,27 @@
 "use strict";
+const storeTable = document.getElementById("store-table");
 
+const hours = [
+  "6am",
+  "7am",
+  "8am",
+  "9am",
+  "10am",
+  "11am",
+  "12pm",
+  "1pm",
+  "2pm",
+  "3pm",
+  "4pm",
+  "5pm",
+  "6pm",
+  "7pm",
+];
+
+
+function randomNum(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
 function location(
   storeName,
   minCustPerHour,
@@ -15,18 +37,35 @@ function location(
   this.minCustPerHour = minCustPerHour;
   this.maxCustPerHour = maxCustPerHour;
   this.avgCookiesPerHour = avgCookiesPerHour;
-  this.customersEachHour = customersEachHour;
-  this.cookiesEachHour = cookiesEachHour;
-  this.totalDailyCookies = this.generateTotalDailyCookies();
-  this.calCustomerEachHour = this.calCustomerEachHour();
-  this.calCookiesEachHour = this.calCookiesEachHour();
-
+  this.customersEachHour = [];
+  this.cookiesEachHour = [];
+  this.totalDailyCookies = 0;
   this.render();
 }
 
+
+CookieStore.prototype.calcCustomersEachHour = function () {
+  // console.log("working");
+  for (let i = 0; i < hours.length; i++) {
+    this.customersEachHour.push(
+      randomNum(this.minCustPerHour, this.maxCustPerHour)
+    );
+  }
+};
+
+CookieStore.prototype.calcCookiesEachHour = function () {
+  // this.calcCustomersEachHour();
+  for (let i = 0; i < hours.length; i++) {
+    let oneHour = Math.ceil(this.customersEachHour[i] * this.avgCookiesPerHour);
+    this.cookiesEachHour.push(oneHour);
+    this.totalDailyCookies += oneHour;
+  }
+};
+
+
 location.prototype.generateTotalDailyCookies = function(){
   for (let i = 0; i < this.cookiesEachHour.length; i++ ){
-    this.calCookiesEachHour[i] = parseInt(Math.random() * (this.maxCustPerHour - this.minCustPerHour) + this.minCustPerHour);
+    this.calCookiesEachHour[i] = parseInt(Math.randomNum() * (this.maxCustPerHour - this.minCustPerHour) + this.minCustPerHour);
   }
 };
     
