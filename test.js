@@ -44,3 +44,14 @@ const hours = [
         const li = document.createElement ("li");
         li.textContent = `${hours[i]}: ${this.cookiesEachHour}`
     }
+}}
+
+
+
+const newCookieStore = new CookieStore(storeName, minCustPerHour,maxCustPerHour, avgCookiesPerHour, customersEachHour,cookiesEachHour, totalDailyCookies);
+console.log(newCookieStore);
+
+newCookieStore.addEventlistener("submit", function
+(e) {
+    e.preventDefault();
+})

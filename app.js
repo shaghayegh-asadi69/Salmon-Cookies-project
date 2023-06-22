@@ -3,6 +3,8 @@ console.log("Script In Construction");
 
 const container = document.getElementById("container");
 const storeTable = document.getElementById("store-table");
+const newStoreForm = document.getElementById("newStoreForm");
+const allStores = [];
 
 const hours = [
   "6am",
@@ -38,8 +40,10 @@ function CookieStore(
   this.customersEachHour = [];
   this.cookiesEachHour = [];
   this.totalDailyCookies = 0;
-  // this.calcCustomersEachHour();
-  // this.calcCookiesEachHour();
+  this.pushCookiStore = function () {
+    allCookieStores.push(this);
+    console.log(allStores);
+  };
   this.render();
 }
 
@@ -75,19 +79,14 @@ CookieStore.prototype.render = function () {
   // append the table data to the table row
   tr.appendChild(th);
 
-  // loop through cookiesEachHour - create a td for each index and append to tr
   for (let i = 0; i < hours.length; i++) {
     const td = document.createElement("td");
     td.textContent = this.cookiesEachHour[i];
     tr.appendChild(td);
   }
-
-  // create a th to display the totals and append to the tr
   const storeTotal = document.createElement("th");
   storeTotal.textContent = this.totalDailyCookies;
   tr.appendChild(storeTotal);
-
-  // append the tr to the table - storeTable
   storeTable.appendChild(tr);
 };
 
@@ -99,5 +98,26 @@ const Paris = new CookieStore("Paris", 21, 15, 13);
 const Tokyo = new CookieStore("Tokyo", 21, 15, 13);
 const Totals = new CookieStore("Totals", 21, 15, 13);
 
+newStoreForm.addEventListener("submit", function (event) {
+  e.preventDefault();
+  const storeName = event.target.storeName.value;
+  const minCustPerHour = event.target.minCustPerHour.value;
+  const maxCustPerHour = event.target.maxCustPerHour.value;
+  const avgCookiesPerHour = event.target.avgCookiesPerHour.value;
 
-console.log(seattle);
+  const newCookieStore = new CookieStore(
+    storeName,
+    minCustPerHour,
+    maxCustPerHour,
+    avgCookiesPerHour);
+  console.log(newCookieStore);
+  renderAllStores();
+  newStoreForm.reset();
+});
+
+function renderAllStores(){
+  for (let i = 0; i < AllStores.length; i++ ){
+    allStores[i].render;
+  }
+}
+  renderAllStores();
